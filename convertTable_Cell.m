@@ -15,7 +15,7 @@ function [DataOut] = convertTable_Cell(DataIn, header)
 %                   FALSE if no header needed. (Default = TRUE)
 %
 % OUTPUTS:
-%   varOut:         cell arrays or MATLAB table converted.
+%   DataOut:         cell arrays or MATLAB table converted.
 
 
 if nargin < 2

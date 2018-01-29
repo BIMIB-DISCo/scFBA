@@ -1,9 +1,28 @@
-function [datasetScored] = getDataScored(model, GeneList, TranscData, ColName, parallel)
+function [datasetRAS] = getDataScored(model, GeneList, TranscData, ColName, parallel)
+% Compute RAS with a dataset as input.
+% 
+% USAGE:
+%
+%   [datasetRAS] = getDataScored(model, GeneList, TranscData, ColName, parallel)
+%
+%
+% INPUT:
+%   model:          metabolic model in COBRA format
+%   GeneList:       vector with genes identifier in the same order of TranscData
+%   TranscData:     Dataset genes x sampleas with expression levels. 
+%                   Genes must be sorted as GeneList
+%
+% OPTIONAL INPUTS:
+%   ColName:        Identifier for each samples.
+%   parallel:       TRUE for use parallel toolbox to speed up the function.
+%                   FALSE otherwise. (Default = TRUE)
+%
+%
+% OUTPUTS:
+%   datasetRAS:     Dataset reactions x samples with RAS for each reaction.
+%                   Nan if there is not a rule associated to that reaction
+%                   or all genes have nan as expression level value.
 
-% attenzione GeneList deve essere nello stesso ordine di TranscData.
-% Suggerisco di passare la colonna del dataset in cui ci sono i geni.
-
-% Sort GeneList and TranscData to match model.genes order
 [~, OrdModGen] = ismember(model.genes, GeneList);
 GeneList = GeneList(OrdModGen);
 TranscData = TranscData(OrdModGen, :);
@@ -11,9 +30,9 @@ TranscData = TranscData(OrdModGen, :);
 nRxn = length(model.rxns);
 nSam = size(TranscData, 2);
 
-datasetScored = table();
+datasetRAS = table();
 vettScore = zeros(nRxn,1);
-datasetScored.Reaction = model.rxns;
+datasetRAS.Reaction = model.rxns;
 AllRules = model.rules;
 h = waitbar(0,'Data computed: 0%', 'Name','RAS computing');
 
@@ -41,12 +60,11 @@ for k=1:nSam
         end
     end
     if nargin < 4
-        datasetScored.(strcat('Var',num2str(k))) = vettScore;
+        datasetRAS.(strcat('Var',num2str(k))) = vettScore;
     else
-        datasetScored.(ColName{k}) = vettScore;
+        datasetRAS.(ColName{k}) = vettScore;
     end
     waitbar(k/nSam,h,strcat({'Progress: '}, num2str(k/nSam*100, 3), '%'), 'Name','RAS computing');
 end
 close(h);
-%datasetScored = [['Reaction', ItemList]; datasetScored];
 end

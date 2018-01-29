@@ -6,7 +6,6 @@ function [scStructOUT, vectRAS] = integrateRAS(scStruct, fieldName)
 %
 %   [scStructOUT, vectScore] = integrateRAS(scStruct, fieldName)
 %
-%
 % INPUT:
 %   scStruct:       Single Cells dataset in a structure built with makeSCdataset function.
 %   fieldName:      Name of field corresponding to the model in scStruct upon which integrate RAS
@@ -14,7 +13,7 @@ function [scStructOUT, vectRAS] = integrateRAS(scStruct, fieldName)
 %
 % OUTPUTS:
 %   scStructOUT:    cell arrays or MATLAB table converted.
-%   vectScore:
+%   vectRAS:        vector with RAS compute for each reactions in model
 
 modelPop = getfield(scStruct, fieldName);
 nPop = length(scStruct.CellType);

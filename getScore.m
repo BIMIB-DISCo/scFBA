@@ -1,10 +1,23 @@
-function [result] = getScore(rule, transcriptVect)
-% geneList and transcriptVect must have the same order
-% rule example: (x(index gene:A) & x(index gene:B)) | x(index gene:C)
+function [RAS] = getScore(rule, transcriptVect)
+% Resolve a gene-enzyme rule and give its RAS
+% 
+% USAGE:
+%
+%   [RAS] = getScore(rule, transcriptVect)
+%
+%
+% INPUT:
+%   rule:           gene-enzyme rule write in the form of (x(1) & x(2)) | x(3)
+%   transcriptVect: vector with expression levels of each genes.
+%                   transcriptVect(i) correspond to x(i) gene                      
+%
+% OUTPUTS:
+%   RAS:            RAS of a given gene-enzyme rule.
+%
 
 ruleParsed = parsRule(rule, transcriptVect);
 
-result = resolveRules(ruleParsed);
+RAS = resolveRules(ruleParsed);
 
 end
 

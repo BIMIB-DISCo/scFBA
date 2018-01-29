@@ -16,9 +16,9 @@ function [scStruct] = scoreSCdataset(scStruct, metModel)
 
 
 try % parallel mode
-    scStruct.RAS = getDataScored(metModel, scStruct.GenName, scStruct.TMPsc', scStruct.CellType,  1);
+    scStruct.RAS = getDataScored(metModel, scStruct.GenName, scStruct.TPMsc', scStruct.CellType,  1);
 catch
-    scStruct.RAS = getDataScored(metModel, scStruct.GenName, scStruct.TMPsc', scStruct.CellType,  0);
+    scStruct.RAS = getDataScored(metModel, scStruct.GenName, scStruct.TPMsc', scStruct.CellType,  0);
 end
 
 end

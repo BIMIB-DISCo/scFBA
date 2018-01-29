@@ -3,23 +3,22 @@ function [popModel] = createPopModel(model, idxExRxns, idxCoopkRxn, nPop, CharEx
 %model must have at least the fields 'rxns', 'mets', 'S', 'c', 'lb', 'up'
 %the metabolites must are in the form of mets[x] where x = char for the
 %compartment
-
+%
 %the ExRnxs are in this expected form: [x] <=> '' if x ~= CharExtComp the
 %reaction will be multiply for nPop times. In this case the internal
 %metabolite don't pass through the external micro environment but go directly in the blood vessel 
 %otherwise the exchange reaction will not modify nor multiply bacuse is
 %already in the correct form
-
+%
 %the CoopRxn expected to be in two form: [y] <=> [CharExtComp] (in <=> out)
 %or [y] <=> '' 
 %In the first case will be multiply nPop times: [y_n] <=> [CharExtComp]
 %In the second case before the multiplication an exchange reaction will be
 %added
-
-
+%
 %CharExtComp = char to discriminate between the extracellular and intercellular
 %compartment e.g. 's' = Tumoer micro environment, 'c' = cytosol.
-
+%
 %rxnsFeat, metsFeat, otherFeat are string array with the name of field
 %linked rispectivelly to rxns, mets or niether of them. If these argument
 %are not passed the corrisponding of each feature will automatically determinate
