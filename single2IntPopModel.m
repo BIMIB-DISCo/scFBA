@@ -35,6 +35,10 @@ function [scStructOut] = single2IntPopModel(scStruct, singleModel, IdxExRxns, Id
 %                                           of the whole population.
 %                           'RAS':          table reactions x cells with
 %                                           RAS computed
+%
+%
+% .. Author:
+%       - Davide Maspero 30/01/2018
 
 numSC = length(scStruct.CellType);
 % exchange boundaries multiply for the numbers of single cells

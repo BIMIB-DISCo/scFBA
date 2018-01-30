@@ -6,7 +6,6 @@ function [scStruct] = makeSCdataset(PoolExp, ExpGxC_SC, CellType, Gene_Names, ep
 %
 %   scStruct = makeSCdataset(PoolExp, ExpGxC_SC, CellType, Gene_Names, epsilon)
 %
-%
 % INPUT:
 %   PoolExp:            Vector with expression profile of Pooled or Bulk
 %                       cells.
@@ -21,7 +20,10 @@ function [scStruct] = makeSCdataset(PoolExp, ExpGxC_SC, CellType, Gene_Names, ep
 %
 % OUTPUTS:
 %   scStruct:           Single Cells dataset in a structure built with makeSCdataset function.
-
+%
+%
+% .. Author:
+%       - Davide Maspero 30/01/2018
 
 if nargin < 5
     epsilon = 0;

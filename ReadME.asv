@@ -1,0 +1,9 @@
+Here a suite of functions to create and manage the building process that take a single metabolic 
+model to a population metabolic model.
+
+The main function is single2IntPopModel.m for a exhaustive explaination please read
+"ref paper scFBA ecc e al link su github"
+
+
+
+The other functions 

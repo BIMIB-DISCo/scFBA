@@ -14,8 +14,13 @@ function [scStructOUT, vectRAS] = integrateRAS(scStruct, fieldName)
 % OUTPUTS:
 %   scStructOUT:    cell arrays or MATLAB table converted.
 %   vectRAS:        vector with RAS compute for each reactions in model
+%
+%
+% .. Author:
+%       - Davide Maspero 30/01/2018
 
-modelPop = getfield(scStruct, fieldName);
+%modelPop = getfield(scStruct, fieldName);
+modelPop = scStruct.(fieldName);
 nPop = length(scStruct.CellType);
 
 IdxPop_0 = find(endsWith(modelPop.rxns, '_0')==1);
@@ -57,11 +62,9 @@ end
 if isfield(scStruct, 'RAS')
     if isempty(scStruct.RAS)
         error('RAS not found in single cell struct. Please use the function scoreSCdataset before run this function.');
-        return
     end
 else
     error('RAS not found in single cell struct. Please use the function scoreSCdataset before run this function.');
-    return
 end
 scStructOUT = scStruct;
 scStructOUT.modelFVA = modelPopBound;

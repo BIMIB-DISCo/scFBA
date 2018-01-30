@@ -12,8 +12,10 @@ function [scStruct] = scoreSCdataset(scStruct, metModel)
 %
 % OUTPUTS:
 %   scStruct:   Single Cells dataset in a structure with RAS field
-
-
+%
+%
+% .. Author:
+%       - Davide Maspero 30/01/2018
 
 try % parallel mode
     scStruct.RAS = getDataScored(metModel, scStruct.GenName, scStruct.TPMsc', scStruct.CellType,  1);

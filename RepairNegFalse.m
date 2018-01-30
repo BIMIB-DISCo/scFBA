@@ -12,12 +12,16 @@ function [scStruct] = RepairNegFalse(scStruct, epsilon)
 %
 % OUTPUTS:
 %   scStruct:       Single Cells dataset in a structure built with makeSCdataset function.
+%
+%
+% .. Author:
+%       - Davide Maspero 30/01/2018
 
 if nargin < 2
     epsilon = min(min(scStruct.TPMsc));
 end
 
-if ~isfield(scStruct.TPMpl)
+if ~isfield(scStruct, 'TPMpl')
     error('No Pooled or Bulk data founded. scStruct must have TPMpl field.')
 end
 
@@ -29,6 +33,6 @@ for i=1:length(scStruct.TPMpl)
         count = count + 1;
     end
 end
-disp(strcat({'Genes '}, num2str(count), {' modified'}));
+disp(strcat(num2str(count),{' gene(s)'}, {' modified'}));
 
 end

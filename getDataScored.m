@@ -22,6 +22,11 @@ function [datasetRAS] = getDataScored(model, GeneList, TranscData, ColName, para
 %   datasetRAS:     Dataset reactions x samples with RAS for each reaction.
 %                   Nan if there is not a rule associated to that reaction
 %                   or all genes have nan as expression level value.
+%
+%
+% .. Author:
+%       - Davide Maspero 30/01/2018
+
 
 [~, OrdModGen] = ismember(model.genes, GeneList);
 GeneList = GeneList(OrdModGen);

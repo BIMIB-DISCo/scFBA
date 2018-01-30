@@ -14,6 +14,10 @@ function [RAS] = getScore(rule, transcriptVect)
 % OUTPUTS:
 %   RAS:            RAS of a given gene-enzyme rule.
 %
+%
+%
+% .. Author:
+%       - Davide Maspero 30/01/2018
 
 ruleParsed = parsRule(rule, transcriptVect);
 

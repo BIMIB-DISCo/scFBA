@@ -16,7 +16,10 @@ function [DataOut] = convertTable_Cell(DataIn, header)
 %
 % OUTPUTS:
 %   DataOut:         cell arrays or MATLAB table converted.
-
+%
+%
+% .. Author:
+%       - Davide Maspero 30/01/2018
 
 if nargin < 2
     header =  true;

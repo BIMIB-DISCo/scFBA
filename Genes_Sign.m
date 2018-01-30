@@ -11,7 +11,7 @@ function [scStruct] = Genes_Sign(scStruct, CutOff, Hist, ExpXLS, Epsilon, nBins,
 % INPUT:
 %   scStruct:       Single Cells dataset in a structure built with makeSCdataset function.
 %
-% OPTIONAL INPUTS::
+% OPTIONAL INPUTS:
 %   CutOff:         A gene is defined significative if the mean of its expression 
 %                   profile have a ratio less then CutOff between the bulk
 %                   expression level. (Default = 0.1)
@@ -26,6 +26,10 @@ function [scStruct] = Genes_Sign(scStruct, CutOff, Hist, ExpXLS, Epsilon, nBins,
 %
 % OUTPUT:
 %   scStruct:       Single Cells dataset with fields added.
+%
+%
+% .. Author:
+%       - Davide Maspero 30/01/2018
 
 if nargin < 7
     FitFunction = 'kernel';
@@ -116,8 +120,21 @@ if ExpXLS
     end
 end
 
+function Matrix = autoscaling(CellXGen)
+nEsp=size(CellXGen,1);
+nGen=size(CellXGen, 2);
 
-
+for i=1:nEsp
+    for k=1:nGen
+        Media=mean(CellXGen(:,k));
+        StdDev = std(CellXGen(:,k));
+        if StdDev == 0
+            Matrix(i,k)=0;
+        else
+        Matrix(i,k)=(CellXGen(i,k)-Media)/StdDev;
+        end
+    end
+end
 
 
 

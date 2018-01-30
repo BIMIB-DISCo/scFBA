@@ -20,6 +20,11 @@ function [datasetOut, datasetCell] = extractGeneRow(model, datasetIn, datasetCol
 % OUTPUTS:
 %   datasetOut:     Dataset filtered on metabolic genes.
 %   datasetCell:    Dataset filtered in cell array format.
+%
+%
+% .. Author:
+%       - Davide Maspero 30/01/2018
+
 
 conv = false;
 if istable(datasetIn)
@@ -60,6 +65,8 @@ if ~isempty(genNotinModel)
     disp(strcat(num2str(length(genNotinModel)), ' gene(s) in model but not in dataset:'))
     disp(model.genes(genNotinModel))
 end
+warning('off', 'MATLAB:table:RowsAddedExistingVars');
+
 if conv
     datasetOut = cell2table(datasetOut,'VariableNames',varName);
     if nargin > 3
@@ -87,4 +94,5 @@ if nargout > 1
     datasetCell = table2cell(datasetOut);
     datasetCell = [ColName; datasetCell];
 end
+warning('on', 'MATLAB:table:RowsAddedExistingVars');
 end

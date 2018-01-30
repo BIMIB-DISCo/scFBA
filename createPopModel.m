@@ -22,6 +22,10 @@ function [popModel] = createPopModel(model, idxExRxns, idxCoopkRxn, nPop, CharEx
 %rxnsFeat, metsFeat, otherFeat are string array with the name of field
 %linked rispectivelly to rxns, mets or niether of them. If these argument
 %are not passed the corrisponding of each feature will automatically determinate
+%
+%
+% .. Author:
+%       - Davide Maspero 30/01/2018
 
 if nargin < 5
     disp('Not enough input arguments');

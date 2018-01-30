@@ -25,6 +25,10 @@ function [modelOut, TableRes] = EditBoundaries(model,rxn, newLb, newUb, NotSure,
 %   TableRes:       A table with id, reaction identifier and boundaries
 %                   founded. Usefull to keep the vector position of the
 %                   model.rxns founded.
+%
+%
+% .. Author:
+%       - Davide Maspero 30/01/2018
 
 
 if nargin < 6
