@@ -39,11 +39,11 @@ function [scStructOut] = single2IntPopModel(scStruct, singleModel, IdxExRxns, Id
 %
 % .. Author:
 %       - Davide Maspero 30/01/2018
-
+%
 numSC = length(scStruct.CellType);
 % exchange boundaries multiply for the numbers of single cells
-singleModel.lb(IdxExRxns) = singleModel.lb(IdxExRxns)*numSC;
-singleModel.ub(IdxExRxns) = singleModel.ub(IdxExRxns)*numSC;
+% singleModel.lb(IdxExRxns) = singleModel.lb(IdxExRxns)*numSC;
+% singleModel.ub(IdxExRxns) = singleModel.ub(IdxExRxns)*numSC;
 
 % delete gene indicate in struct.genNameOff
 if ~isfield(singleModel, 'rxnGeneMat')
@@ -53,6 +53,8 @@ if ~isfield(singleModel, 'rxnGeneMat')
         error('Matrix with reactions - genes assotiation (rxnGeneMat) not found in singleModel and it is impossible to build. Please check.')
     end
 end
+
+
 
 % building popModel
 disp('Building population model');

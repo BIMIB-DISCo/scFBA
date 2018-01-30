@@ -6,9 +6,6 @@ load('data/BC04dataset.mat')
 % load template metabolic network A
 HMRcore = readCbModel('HMRcore.xml');
 
-% Modify constraints as in Damiani et al
-HMRcore = ScFBAExpSetting(HMRcore, 1);
-
 % Load dictionary gene id Ensemble to Hugo Name
 load('data/DictCORE_ENS2HGNC.mat');
 
@@ -41,6 +38,9 @@ try
 catch
     changeCobraSolver('glpk');
 end
+
+% Modify constraints as in Damiani et al
+HMRcore = ScFBAExpSetting(HMRcore, length(BC04.CellType));
 
 % Compute RAS and integrate them in modelFVAInt. During the process also
 % modelPop (template model multiplied many times as single cell samples),
