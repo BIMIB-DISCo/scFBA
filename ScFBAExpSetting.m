@@ -123,4 +123,6 @@ model = buildRxnGeneMat(model); %generate rxnGeneMat field
 model.rev = zeros(length(model.rxns), 1);
 model.rev(model.lb < 0 & model.ub > 0) = 1; %generate rev field for reversible reaction
 
+model.metCharges = zeros(length(model.mets), 1);
+
 end
