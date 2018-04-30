@@ -33,11 +33,13 @@ BC04 = Genes_Sign(BC04);
 BC04 = RepairNegFalse(BC04);
 
 % Initialize COBRA toolbox
-try
-    changeCobraSolver('gurobi');
-catch
-    changeCobraSolver('glpk');
-end
+% try
+%     changeCobraSolver('gurobi');
+% catch
+%     changeCobraSolver('glpk');
+% end
+
+changeCobraSolver('glpk');
 
 % Modify constraints as in Damiani et al
 HMRcore = ScFBAExpSetting(HMRcore, length(BC04.CellType));

@@ -1,4 +1,4 @@
-function [datasetOut, datasetCell] = extractGeneRow(model, datasetIn, datasetCol, dict)
+function [datasetOut, datasetCell, listGenNotInModel, duplicateGenes] = extractGeneRow(model, datasetIn, datasetCol, dict)
 % Filter out gene not present in metabolic model from a dataset,
 %
 % USAGE:
@@ -36,7 +36,7 @@ if istable(datasetIn)
     datasetIn(:,datasetCol) = cellstr(datasetIn(:,datasetCol));
     conv = true;
 end
-if nargin > 3 %if dict is pass
+if nargin > 3 %if dict was pass
     if istable(dict)
         if isnumeric(dict.(1))
             dict.(1) = strtrim(cellstr(num2str(dict.(1))));
@@ -47,25 +47,46 @@ if nargin > 3 %if dict is pass
         idConvName = [{'OrigID'}, {'ConvID'}];
     end
     dict = cellstr(dict);
-    [ismem, idxDictModel] = ismember(model.genes, dict(:,2)); %indici dei geni
-    idxDictModel=idxDictModel(find(ismem==1));
+    dict = dict(ismember(dict(:,2), model.genes),:);
+    if size(dict, 1) ~= size(model.genes, 1)
+        error('Gene ID dictionary is not compleate, please check');
+    end
 else
-    idxDictModel = 1:length(model.genes);
     dict = model.genes;
 end
-[ismem, idxDataDict] = ismember(dict(idxDictModel,1), datasetIn(:,datasetCol));
-idxDataDict=idxDataDict(find(ismem==1));
-idxDictModel=idxDictModel(find(ismem==1));
-datasetOut = datasetIn(idxDataDict,:);
 
-genNotinModel = ismember(model.genes, dict(idxDictModel,2));
-genNotinModel = find(genNotinModel==0);
+% [ismem, idxDataDict] = ismember(dict(idxDictModel,1), datasetIn(:,datasetCol));
+% idxDataDict=idxDataDict(ismem);
+% idxDictModel=idxDictModel(ismem);
+% datasetOut = datasetIn(idxDataDict,:);
+[ismem, idxDataDict] = ismember(datasetIn(:,datasetCol), dict(:,1));
+idxDictModel=idxDataDict(idxDataDict~=0);
+datasetOut = datasetIn(ismem,:);
+%datasetOut = datasetIn(ismember(datasetIn(:,datasetCol), dict(idxDictModel,1)),:);
+
+if nargin > 3
+    genNotinModel = ismember(dict(:,1), datasetOut(:,datasetCol))==0;
+    genNotinModel = find(ismember(model.genes, dict(genNotinModel,2)));
+else
+    genNotinModel = find(ismember(model.genes, datasetOut(:,datasetCol))==0);
+end
+%genNotinModel = find(genNotinModel==0);
 
 if ~isempty(genNotinModel)
     disp(strcat(num2str(length(genNotinModel)), ' gene(s) in model but not in dataset:'))
-    disp(model.genes(genNotinModel))
+    listGenNotInModel = model.genes(genNotinModel);
+    disp(listGenNotInModel)
 end
-warning('off', 'MATLAB:table:RowsAddedExistingVars');
+
+duplicateGenes = datasetOut(:,datasetCol);
+uni = unique(duplicateGenes);
+[~, idxUni] = ismember(uni, duplicateGenes);
+duplicateGenes(idxUni) = [];
+
+if ~isempty(duplicateGenes)
+    disp(strcat(num2str(length(duplicateGenes)), ' gene(s) duplicate in dataset:'));
+    disp(duplicateGenes);
+end
 
 if conv
     datasetOut = cell2table(datasetOut,'VariableNames',varName);
@@ -78,6 +99,9 @@ else
         datasetOut = [dict(idxDictModel) datasetOut];
     end
 end
+
+warning('off', 'MATLAB:table:RowsAddedExistingVars');
+
 if ~isempty(genNotinModel)
     datasetOut(size(datasetOut, 1)+1 : size(datasetOut, 1)+ size(genNotinModel, 1),1) = model.genes(genNotinModel);
     for i=1:size(datasetOut, 2)

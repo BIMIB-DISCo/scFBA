@@ -40,7 +40,7 @@ else
     idxS =  strfind(lower(model.rxns),lower(rxn));
     idx = find(not(cellfun('isempty', idxS)));
 end
-TableRes = table();
+%TableRes = table();
 if nargin < 3
     if(isempty(idx))
         disp(rxn);
@@ -80,7 +80,9 @@ elseif(NotSure)
             modelOut = model;
     end
 else
+    if nargout > 1
     TableRes = table(idx, model.rxns(idx), model.lb(idx),  model.ub(idx), 'VariableNames', {'ID', 'Reaction', 'LowerBound', 'UpperBound'});
+    end
     if ~isempty(newLb)
         model.lb(idx) = newLb;
     end
