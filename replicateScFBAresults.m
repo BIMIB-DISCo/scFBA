@@ -5,9 +5,6 @@ load('data/DictCORE_ENS2HGNC.mat');
 % Import sbml model HMRcore
 HMRcore = readCbModel('HMRcore.xml');
 
-% Modify constraints as in Damiani et al
-HMRcore = ScFBAExpSetting(HMRcore, 1);
-
 % define exchange reactions IDs
 [~, Ex_id] = EditBoundaries(HMRcore, 'Ex_');
 IdxExRxns = Ex_id.ID;
@@ -37,7 +34,7 @@ LCPT45 = Genes_Sign(LCPT45);
 LCPT45 = RepairNegFalse(LCPT45);
 
 % LCMBT15 zenograft from brain metastasis
-LCMBT15 = makeSCdataset(LUAD_filt.LCMBT15_Pooled, LUAD_filt{:,153:202}, LUAD_filt.Properties.VariableNames(154:202), LUAD_filt.HGNC_ID, 10^-4);
+LCMBT15 = makeSCdataset(LUAD_filt.LCMBT15_Pooled, LUAD_filt{:,154:202}, LUAD_filt.Properties.VariableNames(154:202), LUAD_filt.HGNC_ID, 10^-4);
 LCMBT15 = Genes_Sign(LCMBT15);
 LCMBT15 = RepairNegFalse(LCMBT15);
 
@@ -49,6 +46,9 @@ catch
 end
 %H358
 % Compute RAS and integrate them in modelPop
+% Modify constraints as in Damiani et al
+HMRcore = ScFBAExpSetting(HMRcore, length(H358.CellType));
+
 H358 = single2IntPopModel(H358, HMRcore, IdxExRxns, IdxCoopRxn, 's'); 
 fluxIntH358 = optimizeCbModel(H358.modelFVAInt); % optimize model with RAS integrated
 
@@ -59,11 +59,13 @@ FluxPopNormH358 = FluxPopH358; % normalize fluxes between 0 and 1.
 for i=1:length(RxnPop)
     FluxPopNormH358(i,:) = ((FluxPopH358(i,:) - min(FluxPopH358(i,:)))./(max(FluxPopH358(i,:)) - min(FluxPopH358(i,:))));
 end
-clustergram(FluxPopNormH358( ~isnan(FluxPopNormH358(:,1)) ,:),'Cluster',2,'Colormap',redgreencmap,'symmetric',false)
-title('H358');
+clst = clustergram(FluxPopNormH358( ~isnan(FluxPopNormH358(:,1)) ,:),'Cluster',2,'Colormap',redgreencmap,'symmetric',false);
+addTitle(clst, 'H358 fluxes');
 
 %LCPT45
 % Compute RAS and integrate them in modelPop
+HMRcore = ScFBAExpSetting(HMRcore, length(LCPT45.CellType));
+
 LCPT45 = single2IntPopModel(LCPT45, HMRcore, IdxExRxns, IdxCoopRxn, 's'); % Compute RAS and integrate them in modelPop
 fluxIntLCPT45 = optimizeCbModel(LCPT45.modelFVAInt); % optimize model with RAS integrated
 
@@ -79,6 +81,8 @@ title('LCPT45');
 
 %LCMBT15
 % Compute RAS and integrate them in modelPop
+HMRcore = ScFBAExpSetting(HMRcore, length(LCMBT15.CellType));
+
 LCMBT15 = single2IntPopModel(LCMBT15, HMRcore, IdxExRxns, IdxCoopRxn, 's'); % Compute RAS and integrate them in modelPop
 fluxIntLCMBT15 = optimizeCbModel(LCMBT15.modelFVAInt); % optimize model with RAS integrated
 
@@ -121,6 +125,8 @@ end
 
 %BC04
 % Compute RAS and integrate them in modelPop
+HMRcore = ScFBAExpSetting(HMRcore, length(BC04.CellType));
+
 BC04 = single2IntPopModel(BC04, HMRcore, IdxExRxns, IdxCoopRxn, 's'); % Compute RAS and integrate them in modelPop
 fluxIntBC04 = optimizeCbModel(BC04.modelFVAInt); % optimize model with RAS integrated
 
@@ -136,6 +142,8 @@ title('BC04');
 
 %BC03LN
 % Compute RAS and integrate them in modelPop
+HMRcore = ScFBAExpSetting(HMRcore, length(BC03LN.CellType));
+
 BC03LN = single2IntPopModel(BC03LN, HMRcore, IdxExRxns, IdxCoopRxn, 's'); % Compute RAS and integrate them in modelPop
 fluxIntBC03LN = optimizeCbModel(BC03LN.modelFVAInt); % optimize model with RAS integrated
 
