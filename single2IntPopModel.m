@@ -12,10 +12,10 @@ function [scStructOut] = single2IntPopModel(scStruct, singleModel, IdxExRxns, Id
 %   singleMetModel:     Metabolic model in COBRA format
 %   IdxExRxns:          ID reactions to be cosidered es exchange in
 %                       modelPop. For details see createPopModel help or
-%                       popFBA paper (ha senso?)
+%                       popFBA paper
 %   IdxCoopRxn:         ID reactions to be cosidered es cooperative in
 %                       modelPop. For details see createPopModel help or
-%                       popFBA paper (ha senso?)
+%                       popFBA paper
 %   compExt:            letter of the shared compartment of the population in modelPop. 
 %                       For details see createPopModel help or popFBA paper (ha senso?)
 %
