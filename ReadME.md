@@ -23,9 +23,9 @@ The script *replicateScFBAresults.m* replicates all the results presented in Dam
 
 
 **REFERENCE**:
- - Integration of single-cell RNA-seq data into metabolic models to characterize tumour cell populations - 
+ - Integration of single-cell RNA-seq data into population models to characterize cancer metabolism - 
 Authors: Chiara Damiani, Davide Maspero, Marzia Di Filippo, Riccardo Colombo, Dario Pescini, Alex Graudenzi, 
-Hans Victor Westerhoff, Lilia Alberghina, Marco Vanoni and Giancarlo Mauri. 2018 (preprint: https://www.biorxiv.org/content/early/2018/01/30/256644)
+Hans Victor Westerhoff, Lilia Alberghina, Marco Vanoni and Giancarlo Mauri. PLoS Comput Bio 2019 (https://doi.org/10.1371/journal.pcbi.1006733)
 
 *SYSTEM REQUIREMENTS*:
 - COBRA Toolbox 2017 is required
