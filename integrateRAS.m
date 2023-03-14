@@ -29,7 +29,7 @@ RxnList = modelPop.rxns(IdxPop_0);
 %compute fluxVariability and save Fmin, FMax vectors
 objVect = modelPop.c;
 modelPop.c(:) = 0;
-[Fmin,FMax] = fluxVariability(modelPop, 100, '', RxnList); %controllare che 100 vada bene
+[Fmin,FMax] = fluxVariability(modelPop, 100, 'max', RxnList); %controllare che 100 vada bene
 modelPop.c = objVect;
 
 Bound = max(abs(Fmin), abs(FMax));
@@ -93,7 +93,7 @@ for i=1:length(modelBck.rxns)
                 continue
             end
             
-            if(modelInt.lb(i) > Fm && abs(modelInt.lb(i)) > 10^-3) %se è = a infinito o inferiore al minimo non modifico i vincoli.
+            if(modelInt.lb(i) > Fm && abs(modelInt.lb(i)) > 10^-3) %se Ã¨ = a infinito o inferiore al minimo non modifico i vincoli.
                 %modelInt.lb(i) = modelInt.lb(i) * vectRAS(i);
                 modelInt.lb(i) = mapInRange(vectRAS(i), 0,1, -10^-3, modelInt.lb(i));
             end
